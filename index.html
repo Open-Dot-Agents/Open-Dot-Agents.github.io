@@ -106,21 +106,85 @@
       padding-left: 1.25rem;
       margin-bottom: 0;
     }
+
+    code,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(9, 14, 29, 0.8);
+      color: var(--text);
+      margin: 1rem 0 0;
+    }
+
+    .section-lead {
+      max-width: 52rem;
+      margin-top: 0;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 0;
+      margin: 1rem 0 0;
+      list-style: none;
+    }
+
+    .pill-list li {
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 0.98rem;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th,
+    td {
+      padding: 0.9rem 1rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    th {
+      color: var(--text);
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
   <main>
     <section class="hero">
       <span class="eyebrow">Open .agents Standard</span>
-      <h1>A simple open home for portable agents.</h1>
+      <h1>A production-ready foundation for portable agents.</h1>
       <p>
         The Open .agents Standard aims to make agent definitions easier to share,
         inspect, version, and run across tools and platforms.
       </p>
       <p>
-        This GitHub Pages site is the first public landing page for the effort:
-        a lightweight place to explain the idea, the goals, and how to follow
-        along as the standard evolves.
+        Instead of treating every harness as a one-off integration, the standard
+        proposes a canonical <code>.agents/</code> project structure that can be
+        translated into the ad-hoc configuration formats used by existing agent
+        runtimes today.
       </p>
     </section>
 
@@ -139,23 +203,179 @@
           <li>Portable agent definitions</li>
           <li>Readable, versionable specifications</li>
           <li>Open collaboration across tools and communities</li>
+          <li>A canonical model that can compile down to current harnesses</li>
         </ul>
       </section>
 
       <section class="card">
-        <h2>What comes next</h2>
+        <h2>Design principle</h2>
         <p>
-          Future iterations can add the formal specification, examples,
-          governance details, and implementation guidance.
+          Author agents once in a stable open structure, then translate them into
+          runtime-specific prompts, tool manifests, metadata files, or workflow
+          descriptors as needed.
         </p>
       </section>
     </div>
 
     <section>
+      <h2>Important aspects of the standard</h2>
+      <p class="section-lead">
+        A useful open agent standard needs to cover more than prompts. It should
+        describe identity, instructions, tools, knowledge, policies, execution
+        profiles, and compatibility layers for current ecosystems.
+      </p>
+      <ul class="pill-list">
+        <li>Canonical agent metadata</li>
+        <li>Portable system instructions</li>
+        <li>Tool and capability declarations</li>
+        <li>Knowledge and attached assets</li>
+        <li>Execution profiles and policies</li>
+        <li>Harness translation targets</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Proposed <code>.agents</code> directory structure</h2>
+      <p class="section-lead">
+        The proposed layout below keeps authoring concerns separate while giving
+        translators enough structure to generate harness-specific configuration
+        files automatically.
+      </p>
+      <pre><code>.agents/
+  agent.yaml                # canonical metadata: name, description, version
+  instructions.md           # primary system instructions for the agent
+  tools/
+    github.yaml             # tool declarations, permissions, and policies
+    web.yaml
+  knowledge/
+    product-overview.md     # reusable reference material
+    glossary.md
+  profiles/
+    default.yaml            # default model/runtime settings
+    reviewer.yaml           # alternate persona or execution profile
+  workflows/
+    triage.yaml             # reusable task entry points
+  harnesses/
+    copilot.yaml            # output target options and field mappings
+    claude-code.yaml
+    openai.yaml
+</code></pre>
+    </section>
+
+    <section>
+      <h2>How the canonical structure maps to existing harnesses</h2>
+      <p class="section-lead">
+        The standard does not require existing tools to change overnight. It can
+        act as a source format that translates into the custom files and fields
+        each harness already expects.
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th><code>.agents</code> concept</th>
+              <th>Canonical source</th>
+              <th>Typical harness output</th>
+              <th>Translation intent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Agent identity</td>
+              <td><code>.agents/agent.yaml</code></td>
+              <td>Name, description, labels, runtime metadata</td>
+              <td>Preserve stable agent identity across platforms.</td>
+            </tr>
+            <tr>
+              <td>System instructions</td>
+              <td><code>.agents/instructions.md</code></td>
+              <td>Prompt files, instruction blocks, assistant bootstrap text</td>
+              <td>Keep one source of truth for core behavior.</td>
+            </tr>
+            <tr>
+              <td>Tool permissions</td>
+              <td><code>.agents/tools/*.yaml</code></td>
+              <td>Allowed tools lists, function manifests, MCP/tool schemas</td>
+              <td>Map capabilities into each harness permission model.</td>
+            </tr>
+            <tr>
+              <td>Knowledge assets</td>
+              <td><code>.agents/knowledge/*</code></td>
+              <td>Attached files, retrieval sources, context bundles</td>
+              <td>Reuse the same reference material without duplication.</td>
+            </tr>
+            <tr>
+              <td>Execution profiles</td>
+              <td><code>.agents/profiles/*.yaml</code></td>
+              <td>Model presets, reasoning levels, temperature/runtime knobs</td>
+              <td>Adapt one agent to multiple operating modes safely.</td>
+            </tr>
+            <tr>
+              <td>Harness adapters</td>
+              <td><code>.agents/harnesses/*.yaml</code></td>
+              <td>Per-platform overrides and target-specific field mappings</td>
+              <td>Handle gaps where a harness has bespoke configuration.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Translation model</h2>
+      <p class="section-lead">
+        In practice, a translator or build step can read the canonical
+        <code>.agents/</code> tree and emit the format required by a given
+        harness. The goal is not to erase differences, but to isolate them in a
+        clear adapter layer.
+      </p>
+      <pre><code>canonical .agents/ definition
+        ├── shared metadata
+        ├── shared instructions
+        ├── shared tools and knowledge
+        └── target-specific adapter rules
+                ↓
+      generated harness config
+        ├── prompt/instruction file
+        ├── tool manifest or allowlist
+        ├── model/runtime settings
+        └── optional workflow/task wrapper
+</code></pre>
+    </section>
+
+    <section>
+      <h2>What “production ready” means for this first version</h2>
+      <div class="grid">
+        <section class="card">
+          <h2>Clear scope</h2>
+          <p>
+            The site now explains the standard as a canonical source model, not
+            just a landing-page slogan.
+          </p>
+        </section>
+        <section class="card">
+          <h2>Concrete structure</h2>
+          <p>
+            It includes a proposed <code>.agents/</code> layout that can guide
+            implementers and future specification work.
+          </p>
+        </section>
+        <section class="card">
+          <h2>Compatibility path</h2>
+          <p>
+            It documents how the open structure can map into the ad-hoc
+            configuration surfaces of current harnesses.
+          </p>
+        </section>
+      </div>
+    </section>
+
+    <section>
       <h2>Follow the project</h2>
       <p>
-        This site is currently a first version. For source and future updates,
-        visit the
+        This site is still an early version, but it now captures the core ideas
+        needed to discuss the standard with implementers. For source and future
+        updates, visit the
         <a href="https://github.com/Open-Dot-Agents/Open-Dot-Agents.github.io">repository on GitHub</a>.
       </p>
     </section>
