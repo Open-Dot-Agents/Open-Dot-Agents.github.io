@@ -8,3 +8,6 @@ from this repository.
 The homepage currently covers the standard goals, a proposed `.agents`
 directory structure, and how canonical agent definitions can translate to
 existing harness-specific configurations.
+
+It also includes production-facing navigation, adoption guidance, and concrete
+translation examples to make the emerging standard easier to review.

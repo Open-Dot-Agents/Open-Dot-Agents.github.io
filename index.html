@@ -8,6 +8,12 @@
     name="description"
     content="Open .agents Standard: an open foundation for portable, interoperable agent definitions."
   >
+  <meta name="theme-color" content="#0b1020">
+  <meta property="og:title" content="Open .agents Standard">
+  <meta
+    property="og:description"
+    content="A production-ready foundation for portable agents, canonical .agents project structures, and harness translation."
+  >
   <style>
     :root {
       color-scheme: light dark;
@@ -17,6 +23,7 @@
       --muted: #b8c2d9;
       --accent: #72f2c0;
       --border: rgba(255, 255, 255, 0.16);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
     }
 
     * {
@@ -33,10 +40,66 @@
       line-height: 1.6;
     }
 
+    .skip-link {
+      position: absolute;
+      left: 1rem;
+      top: -3rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      background: var(--text);
+      color: var(--bg);
+      z-index: 10;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+    }
+
+    header,
     main {
       max-width: 960px;
       margin: 0 auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    header {
+      padding-top: 1.5rem;
+    }
+
+    main {
       padding: 4rem 1.5rem 5rem;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      color: var(--text);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
     }
 
     .hero {
@@ -45,6 +108,7 @@
       border-radius: 24px;
       background: var(--panel);
       backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
     }
 
     h1,
@@ -96,6 +160,7 @@
       border: 1px solid var(--border);
       background: var(--panel);
       margin-top: 1.5rem;
+      box-shadow: var(--shadow);
     }
 
     a {
@@ -169,11 +234,74 @@
       color: var(--text);
       font-size: 0.95rem;
     }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 1.5rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .button.primary {
+      color: #062019;
+      background: var(--accent);
+      border-color: transparent;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .number-list {
+      margin: 0;
+      padding-left: 1.35rem;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+
+    footer p {
+      font-size: 0.95rem;
+    }
   </style>
 </head>
-<body>
-  <main>
-    <section class="hero">
+<body id="top">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header>
+    <nav aria-label="Primary">
+      <a class="brand" href="#top">Open .agents Standard</a>
+      <ul class="nav-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#structure">Structure</a></li>
+        <li><a href="#mapping">Mappings</a></li>
+        <li><a href="#adoption">Adoption</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main-content">
+    <section id="overview" class="hero">
       <span class="eyebrow">Open .agents Standard</span>
       <h1>A production-ready foundation for portable agents.</h1>
       <p>
@@ -186,6 +314,10 @@
         translated into the ad-hoc configuration formats used by existing agent
         runtimes today.
       </p>
+      <div class="actions">
+        <a class="button primary" href="#structure">Explore the proposed structure</a>
+        <a class="button" href="https://github.com/Open-Dot-Agents/Open-Dot-Agents.github.io">View the repository</a>
+      </div>
     </section>
 
     <div class="grid">
@@ -235,6 +367,38 @@
     </section>
 
     <section>
+      <h2>Current status</h2>
+      <p class="section-lead">
+        The standard is emerging, but the authoring model can still be
+        production-ready if it focuses on stability at the canonical layer and
+        allows harness-specific adapters to evolve independently.
+      </p>
+      <div class="grid">
+        <section class="card">
+          <h2>Stable authoring surface</h2>
+          <p>
+            Agent authors work in one canonical tree instead of re-writing the
+            same intent in several incompatible formats.
+          </p>
+        </section>
+        <section class="card">
+          <h2>Adapter-based interoperability</h2>
+          <p>
+            Translators can target current harnesses without forcing those
+            harnesses to adopt the same internal configuration model.
+          </p>
+        </section>
+        <section class="card">
+          <h2>Incremental adoption</h2>
+          <p>
+            Teams can introduce <code>.agents/</code> alongside existing runtime
+            configs, then automate generation over time.
+          </p>
+        </section>
+      </div>
+    </section>
+
+    <section id="structure">
       <h2>Proposed <code>.agents</code> directory structure</h2>
       <p class="section-lead">
         The proposed layout below keeps authoring concerns separate while giving
@@ -262,7 +426,7 @@
 </code></pre>
     </section>
 
-    <section>
+    <section id="mapping">
       <h2>How the canonical structure maps to existing harnesses</h2>
       <p class="section-lead">
         The standard does not require existing tools to change overnight. It can
@@ -344,6 +508,82 @@
     </section>
 
     <section>
+      <h2>Concrete translation example</h2>
+      <p class="section-lead">
+        The canonical definition should be specific enough to generate real
+        runtime assets, while still remaining human-readable and easy to review.
+      </p>
+      <div class="two-column">
+        <div class="card">
+          <h2>Canonical source</h2>
+          <pre><code>agent:
+  name: reviewer
+  description: Reviews changes for correctness
+instructions: instructions.md
+tools:
+  - github
+  - bash
+profile: reviewer
+</code></pre>
+        </div>
+        <div class="card">
+          <h2>Harness output</h2>
+          <pre><code>name: reviewer
+system_prompt: ./instructions.md
+allowed_tools:
+  - github
+  - bash
+runtime:
+  profile: reviewer
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="adoption">
+      <h2>Adoption path</h2>
+      <p class="section-lead">
+        A practical rollout path should improve portability immediately, without
+        blocking teams on a finalized specification or a single reference
+        implementation.
+      </p>
+      <ol class="number-list">
+        <li>Author the agent once in <code>.agents/</code>.</li>
+        <li>Keep the canonical instructions, tools, and profiles under version control.</li>
+        <li>Generate or sync harness-specific configurations from the canonical source.</li>
+        <li>Validate runtime behavior in the target harnesses.</li>
+        <li>Refine the shared schema only when multiple harnesses need the same concept.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Specification priorities</h2>
+      <div class="grid">
+        <section class="card">
+          <h2>Portability first</h2>
+          <p>
+            Definitions should survive moves across repositories, vendors, and
+            orchestration environments with minimal rewriting.
+          </p>
+        </section>
+        <section class="card">
+          <h2>Explicit capability boundaries</h2>
+          <p>
+            Tool permissions, policies, and execution profiles should be declared
+            clearly enough to support review and governance.
+          </p>
+        </section>
+        <section class="card">
+          <h2>Readable by humans</h2>
+          <p>
+            The source format should be optimized for authoring, code review, and
+            long-term maintenance, not just machine generation.
+          </p>
+        </section>
+      </div>
+    </section>
+
+    <section>
       <h2>What “production ready” means for this first version</h2>
       <div class="grid">
         <section class="card">
@@ -380,5 +620,12 @@
       </p>
     </section>
   </main>
+  <footer>
+    <p class="muted">
+      The current site is a static first version designed to make the standard
+      reviewable in public while the underlying specification continues to
+      evolve.
+    </p>
+  </footer>
 </body>
 </html>
